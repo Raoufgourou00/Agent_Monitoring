@@ -23,7 +23,7 @@ public class MachineState {
 	 
 	 //------------Server Setting------------------
 	 private int port;
-	 private final String context = "saveServer";
+	 private final String context = "saveMachine";
 	 private String host;
 	 private int timer;  
 	 private int portListner;
@@ -260,8 +260,8 @@ public class MachineState {
 			jaNetInterfaces.put(ni.toJSONObject());
 		}
 		
-		joMachine.put("MachineArchitecture", joMachineArchitecture);
-		joMachine.put("MachineSetting", joMachineSetting);
+		joMachine.put("machineArchitecture", joMachineArchitecture);
+		joMachine.put("machineSetting", joMachineSetting);
 		joMachine.put("networkInterfaceList", jaNetInterfaces);
 		
 		

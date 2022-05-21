@@ -1,12 +1,23 @@
-[2022-05-20 17:25:34] INFO   : Collecting data 
-[2022-05-20 17:25:53] INFO   : Starting client 
-[2022-05-20 17:25:53] INFO   : Set client configurations 
-[2022-05-20 17:25:53] INFO   : Host IP: 'localhost' Host Port: '1234' Machine Type: 'Virtual Machine' Timer: '1 minutes' 
-[2022-05-20 17:25:53] INFO   : Started client 
-[2022-05-20 17:25:53] INFO   : Collecting Data 
-[2022-05-20 17:25:54] INFO   : Connecting To 'http://localhost:1234/saveServer' 
-[2022-05-20 17:25:54] WARNING: Connection Failed 
-[2022-05-20 17:25:54] WARNING: Failed To Connect To Server: Connection Refused 
-[2022-05-20 17:26:20] INFO   : Stoped client 
-[2022-05-20 17:26:20] WARNING: Clock Is Down 
-[2022-05-20 17:26:20] INFO   : Process exited normally 
+[2022-05-21 20:59:56] INFO   : Collecting data 
+[2022-05-21 21:00:11] INFO   : Starting client 
+[2022-05-21 21:00:11] INFO   : Set client configurations 
+[2022-05-21 21:00:11] INFO   : Host IP: 'localhost' Host Port: '8080' Machine Type: 'Virtual Machine' Timer: '1 minutes' 
+[2022-05-21 21:00:11] INFO   : Started client 
+[2022-05-21 21:00:11] INFO   : Collecting Data 
+[2022-05-21 21:00:12] INFO   : Connecting To 'http://localhost:8080/saveMachine' 
+[2022-05-21 21:00:12] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
+[2022-05-21 21:00:12] INFO   : Data Is Sent 
+[2022-05-21 21:00:17] INFO   : Stoped client 
+[2022-05-21 21:00:17] WARNING: Clock Is Down 
+[2022-05-21 21:00:17] INFO   : Process exited normally 
+[2022-05-21 21:01:59] INFO   : Starting client 
+[2022-05-21 21:01:59] INFO   : Set client configurations 
+[2022-05-21 21:01:59] INFO   : Host IP: 'localhost' Host Port: '8080' Machine Type: 'Server' Timer: '1 minutes' 
+[2022-05-21 21:01:59] INFO   : Started client 
+[2022-05-21 21:01:59] INFO   : Collecting Data 
+[2022-05-21 21:01:59] INFO   : Connecting To 'http://localhost:8080/saveMachine' 
+[2022-05-21 21:02:00] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
+[2022-05-21 21:02:00] INFO   : Data Is Sent 
+[2022-05-21 21:02:06] INFO   : Stoped client 
+[2022-05-21 21:02:06] WARNING: Clock Is Down 
+[2022-05-21 21:02:06] INFO   : Process exited normally 
