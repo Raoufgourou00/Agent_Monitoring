@@ -35,40 +35,43 @@ public class Process {
 	
 
 	@SuppressWarnings("deprecation")
-	public void initialise(long proc,Sigar sigar) {
+	public static Process initialise(long proc,Sigar sigar) {
 		
+		Process process = new Process();
 		ProcCpu procCpu;
 		try {
 			procCpu = sigar.getProcCpu(proc);
-			this.pid =  proc;
-			this.cpuPercent = procCpu.getPercent() * 100D;
-			this.startTime =  getDate(procCpu.getStartTime());
+			process.pid =  proc;
+			process.cpuPercent = procCpu.getPercent() * 100D;
+			process.startTime =  getDate(procCpu.getStartTime());
 			
 			ProcCredName procCredName = sigar.getProcCredName(proc);
-			this.userName = procCredName.getUser();
+			process.userName = procCredName.getUser();
 			
 			ProcMem procMem = sigar.getProcMem(proc);
-			this.memRss = Sigar.formatSize(procMem.getRss());
-			this.memShare = Sigar.formatSize(procMem.getShare());
-			this.memSize = Sigar.formatSize(procMem.getSize());
-			this.memVsize = Sigar.formatSize(procMem.getVsize());
+			process.memRss = Sigar.formatSize(procMem.getRss());
+			process.memShare = Sigar.formatSize(procMem.getShare());
+			process.memSize = Sigar.formatSize(procMem.getSize());
+			process.memVsize = Sigar.formatSize(procMem.getVsize());
 		
 			ProcState procStat = sigar.getProcState(proc);
-			this.name = procStat.getName();
-			this.state = getState(procStat.getState());
+			process.name = procStat.getName();
+			process.state = getState(procStat.getState());
 			
 			ProcTime procTime = sigar.getProcTime(proc);
 			long time = procTime.getTotal();
 			 
-			this.cpuTime = msToTime(time);
+			process.cpuTime = msToTime(time);
+			return process;
 		} catch (SigarException e) {
-			LoggerClass.getLOGGER().warning("Can't Get Process Information Of:"+ "'" + proc + "' : Permission Denied");
+			//LoggerClass.getLOGGER().warning("Can't Get Process Information Of:"+ "'" + proc + "' : Permission Denied");
+			return null;
 		}	
 	}
 	
 	
 	
-	public String getDate(long time) {
+	public static String getDate(long time) {
 		Date date = new Date(time);
 		SimpleDateFormat DateFor = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		return DateFor.format(date);
@@ -76,7 +79,7 @@ public class Process {
 	}
 	
 	
-    public String getState(char state) {
+    public static String getState(char state) {
     	switch (state) {
         case ProcState.SLEEP:
         	return("Sleeping");
@@ -93,7 +96,7 @@ public class Process {
       }
     }
     
-    public String msToTime(long time) {
+    public static String msToTime(long time) {
     	 long ms = time%100;
 		 long s = time/1000%60;
 		 long m = time/1000/60;

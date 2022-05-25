@@ -16,7 +16,7 @@ public class OS {
 	private String vendorCodeName;
 	private String vendorName;
 	private String vendorVersion;
-	private String version;
+	private String version; 
 	
 	public OS() {
 		super();
@@ -24,6 +24,7 @@ public class OS {
 	}
 	
 	public void initialise() {
+		
 		OperatingSystem OS = OperatingSystem.getInstance();
 		this.arch = OS.getArch();
 		this.cpuEndian = OS.getCpuEndian();
@@ -37,7 +38,6 @@ public class OS {
 		this.vendorName = OS.getVendorName();
 		this.vendorVersion = OS.getVendorVersion();
 		this.version = OS.getVersion();
-	
 	}
 
 	public String getArch() {
@@ -87,7 +87,6 @@ public class OS {
 	public String getVersion() {
 		return version;
 	}
-
 
 	
 	

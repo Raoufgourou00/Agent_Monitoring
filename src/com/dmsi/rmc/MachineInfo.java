@@ -6,6 +6,7 @@ import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.NetConnection;
 import org.hyperic.sigar.NetFlags;
+import org.hyperic.sigar.OperatingSystem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.json.JSONArray;
@@ -105,8 +106,10 @@ public class MachineInfo {
 			for(int i = 0 ; i<process.length ; i++) {
 				
 				Process p = new Process();
-				p.initialise(process[i], sigar);
-				processList.add(p);
+				p = Process.initialise(process[i], sigar);
+				if(p != null) {
+					processList.add(p);
+				}			
 			}
 		} catch (SigarException e) {
 			LoggerClass.getLOGGER().warning("Can't Get Process List: Permission Denied");
@@ -233,7 +236,9 @@ public class MachineInfo {
 
 
 
-
+    public boolean isWindows() {
+		return OperatingSystem.IS_WIN32;
+	}
 
 
 

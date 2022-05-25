@@ -11,11 +11,9 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Base64;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.swing.JOptionPane;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,68 +24,46 @@ public class Listner extends Thread {
 	private int listnerPort = 8082;
 	private boolean end; 
 	
-
-	
-	public int getListnerPort() {
-		return listnerPort;
-	}
-
-
-	public boolean isEnd() {
-		return end;
-	}
-
-
-	public void setListnerPort(int listnerPort) {
-		this.listnerPort = listnerPort;
-	}
-
-
-	public void setEnd(boolean end) {
-		this.end = end;
-	}
-
-
 	public Listner() {
 		super();
 	}
 
-	
 	public Listner(int listnerPort) {
 		super();
 		this.listnerPort = listnerPort;
 	}
 
-
 	public void terminate() {
 		end = true;
 	}
 	
-
+	
 	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void run() {
 		try {
+			
+			//----------------Create ServerSocket----------------------
+			@SuppressWarnings("resource")
 			ServerSocket ss = new ServerSocket(listnerPort);
 			end = false;
 			while(!end) {
 				
+				//----------------Accept WebService Connection------------------------
 				Socket s = ss.accept();
-				
+		
 				InputStream is = s.getInputStream();
 				InputStreamReader isr = new InputStreamReader(is);
 				BufferedReader br = new BufferedReader(isr);
+							
+				BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(s.getOutputStream(), "UTF8"));
 					
-				
-	
-				BufferedWriter wr = new BufferedWriter(
-						new OutputStreamWriter(s.getOutputStream(), "UTF8")
-						);
-				
+				//------------------Read the secret key from connection------------------
 				ObjectInputStream ois = new ObjectInputStream(is);
 				SecretKey secretKey = (SecretKey) ois.readObject();
-				//System.out.println(secretKey);
+				//-----------------------------------------------------------------------
 				
+				//----------------Read The command from connection----------------------
 				StringBuilder response = new StringBuilder();
 			    String responseLine = null;
 			    while ((responseLine = br.readLine()) != null) {
@@ -108,39 +84,57 @@ public class Listner extends Thread {
 			    
 			    case 1: //Change User Password
 			    	
-			    	if(jo.getString("os").equals("Linux")) {
+			    	LoggerClass.getLOGGER().info("Changing machine password... ");
+			    	if(FrameConnection.getMachineState().getMachineInfo().isWindows()) {
 			    		
-			    		//changeLinuxPassword(decrypt(jo.getString("password")),decrypt(jo.getString("newPassword")));
+			    		
 			    		InputStream is1 = null;
-			    		wr.write(changeLinuxPassword(jo.getString("password"),jo.getString("newPassword"),is1) + "\r\n");
+			    		InputStream is2 = null;
+			    		wr.write(changeWindowsPassword(jo.getString("newPassword"),is1,is2) + "\r\n");
 						wr.write("eof\r\n");
-						wr.flush();  	
+						wr.flush();  
+			    			
 						
 			    	}
 			    	else {
-			    		// changeWindowsPassword
+			    		
+			    		InputStream is1 = null;
+			    		InputStream is2 = null;
+			    		wr.write(changeLinuxPassword(jo.getString("newPassword"),is1,is2) + "\r\n");
+						wr.write("eof\r\n");
+						wr.flush();  
 			    	}
 			    	
 			    	break;
 			    	
 			    case 2: //ChangeIp
 			    	
-			    	if(jo.getString("os").equals("Linux")) {
+			    	LoggerClass.getLOGGER().info("Changing network configuration... ");
+			    	if(FrameConnection.getMachineState().getMachineInfo().isWindows()) {
 			    		
-			    		JSONObject res = new JSONObject();
-			    		res.put("status", changeLinuxIp(jo.getString("ip"),jo.getString("netmask"),jo.getString("network"),jo.getString("password")));
-			    		wr.write(res.toString() + "\r\n");
+			    		InputStream is1 = null;
+			    		InputStream is2 = null;
+			    		wr.write(changeWindowsIp(jo.getString("network"),jo.getString("ip"),jo.getString("netmask"),is1,is2) + "\r\n");
 			    		wr.write("eof\r\n");
 			    		wr.flush();	
+			    		
 			    	}
 			    	else {
-			    		//ChangeWindowsIp
+			    		
+			    		InputStream is1 = null;
+			    		InputStream is2 = null;
+			    		wr.write(changeLinuxIp(jo.getString("network"),jo.getString("ip"),jo.getString("netmask"),is1,is2) + "\r\n");
+			    		wr.write("eof\r\n");
+			    		wr.flush();	
+			    		
 			    	}
 			    	break;
 			    	
 			    case 3: //Change Donkey Configurations
 			    	
-				    boolean okey = true;			       
+			    	
+			    	LoggerClass.getLOGGER().info("Changing agent configuration... ");
+			    	
 				    if(jo.optBoolean("on")) {
 			    	
 				    	if(FrameConnection.getRunning()) {
@@ -148,32 +142,24 @@ public class Listner extends Thread {
 				    	}
 				    	
 				    	FrameConnection.getLabel6().setText(jo.optString("host"));
-					    FrameConnection.getLabel8().setText(new Integer(jo.optInt("port")).toString());
-					    FrameConnection.getLabel10().setText(new Integer(jo.optInt("timer")).toString());	    	
+					    FrameConnection.getLabel8().setText(jo.optString("port"));
+					    FrameConnection.getLabel10().setText(jo.optString("timer"));	    	
 					    FrameConnection.getOn().doClick();
-				    	
-				    	if(!FrameConnection.getMachineState().getHost().equals(jo.optString("host"))) {
-				    		okey = false;
-				    	}
-				    	else {
-				    		
-				    		if(!(FrameConnection.getMachineState().getPort() == jo.optInt("port"))) {
-				    			okey = false;
-				    		}
-				    		else {
-		
-			    				if(!(FrameConnection.getMachineState().getTimer() == jo.optInt("timer"))) {
-					    			okey = false;
-					    		}
-				    		}
-				    	}	    	
+				    		    	
 				    }
 				    else {
-				    	FrameConnection.getOff().doClick();
+				    	
+				    	if(FrameConnection.getRunning()) {
+				    		FrameConnection.getOff().doClick();
+				    	}
+				    	
 				    }
 				    
 				    JSONObject res = new JSONObject();
-				    res.put("status", okey);			    
+				    res.put("on", jo.optBoolean("on"));		
+				    res.put("host", FrameConnection.getMachineState().getHost());
+				    res.put("port", FrameConnection.getMachineState().getPort());
+				    res.put("timer", FrameConnection.getMachineState().getTimer());
 				    
 				    wr.write(res.toString() + "\r\n");
 					wr.write("eof\r\n");
@@ -201,19 +187,18 @@ public class Listner extends Thread {
 				str = JOptionPane.showInputDialog("Please entre a valid port number.");
 			}
 			if(!str.equals(getListnerPort())) {
-				LoggerClass.getLOGGER().warning("Listner port has been changed to " + getListnerPort());
+				LoggerClass.getLOGGER().info("Listner port has been changed to " + getListnerPort());
 			}
 			setListnerPort(Integer.parseInt(str));
 			this.run();
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (ClassNotFoundException e) {		
+			e.printStackTrace();
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
-		
 	
 		
 	}
@@ -221,27 +206,24 @@ public class Listner extends Thread {
 	
 
 	@SuppressWarnings("finally")
-	public String changeLinuxPassword(String password,String newPassword,InputStream isErr) {
+	public String changeLinuxPassword(String newPassword,InputStream isErr,InputStream is) {
 		
-		String command = "(echo \"" + password + "\"; echo \""+ newPassword + "\"; echo \"" + newPassword+ "\") | passwd ";
+		String command = "(echo \""+ newPassword + "\"; echo \"" + newPassword+ "\") | passwd ";
 		ProcessBuilder pb = new ProcessBuilder();
 		pb.command("/bin/sh", "-c", command);
-		java.lang.Process p;
+	
 		
 		try {
-			p = pb.start();
+			
+			java.lang.Process p = pb.start();
 			OutputStream out = p.getOutputStream();
 			isErr = p.getErrorStream();
+			is = p.getInputStream();
 			
-			out.write((password + "\n").getBytes());
-			out.flush();
-			Thread.sleep(1000);
-			
-			
+						
 			out.write((newPassword + "\n").getBytes());
 			out.flush();
 			Thread.sleep(1000);
-	
 			
 			out.write((newPassword + "\n").getBytes());
 			out.flush();
@@ -249,43 +231,117 @@ public class Listner extends Thread {
 			
 		
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+		} catch (Exception e) {	
+			e.printStackTrace();
 		} finally {
 			
-			return printResults(isErr);
+			return printResults(is) + " " + printResults(isErr);
 		}
 	    
 		
 	}
 	
 	
-	public boolean changeLinuxIp(String ip, String netmask,String network,String password) throws IOException {
- 		
-		String[] cmd = {"/bin/bash","-c","echo " + password + "| sudo -S ifconfig " + network + " " + ip + " netmask " + netmask};
-		java.lang.Process pb = Runtime.getRuntime().exec(cmd);
-		 
+
+	@SuppressWarnings("finally")
+	public String changeWindowsPassword(String newPassword,InputStream is,InputStream isErr) {
+		
 		FrameConnection.getMachineState().collectData();
-		if(FrameConnection.getMachineState().getLastIpAddress().equals(ip)) {
-			return true;
+		String user = FrameConnection.getMachineState().getMachineInfo().getUserName();
+		String command = "net user " + user + " " + newPassword;
+		ProcessBuilder builder = new ProcessBuilder();
+		builder.command("cmd.exe", "/c", command);
+        
+		try {
+			
+			java.lang.Process p = builder.start();
+			isErr = p.getErrorStream();
+			is = p.getInputStream();
+	        
+	        
+	        
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+			return printResults(is) + " " + printErrResults(isErr);
 		}
-		return false;
+        
+       
+	}
+	
+	
+	@SuppressWarnings("finally")
+	public String changeLinuxIp(String network, String ip, String netmask,InputStream is,InputStream isErr) {
+ 		
+		
+		String[] cmd = {"/bin/bash","-c","ifconfig " + network + " " + ip + " netmask " + netmask};
+		try {
+
+			java.lang.Process pb = Runtime.getRuntime().exec(cmd);
+			isErr = pb.getErrorStream();
+			is = pb.getInputStream();
+	               
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+			return printResults(is) + " " + printErrResults(isErr);
+		}
+		
+	}
+	
+
+	@SuppressWarnings("finally")
+	public String changeWindowsIp(String network, String ip, String netmask,InputStream is, InputStream isErr) {
+			
+		String command = "netsh interface ip set address name=\"" + network + "\" static " + ip + " " + netmask;
+		ProcessBuilder builder = new ProcessBuilder();
+		builder.command("cmd.exe", "/c", command);	
+			
+		try {
+
+			java.lang.Process p = builder.start();
+			isErr = p.getErrorStream();
+			is = p.getInputStream();
+	        
+	       			        
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+			return printResults(is) + " " + printErrResults(isErr);
+		}
 	}
 	
 	
 	public String printResults(InputStream is) {
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 	    String line = "";	
-	    String output = null;
+	    String output = "";
 	    try {
 			while ((line = reader.readLine()) != null) {
-				output = line;
+				if(!line.isEmpty())
+				LoggerClass.getLOGGER().info(line);
+				output += line;
 			}
 			return output;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String printErrResults(InputStream is) {
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+	    String line = "";	
+	    String output = "";
+	    try {
+			while ((line = reader.readLine()) != null) {
+				if(!line.isEmpty())
+				LoggerClass.getLOGGER().info(line);
+				output += line;
+			}
+			return output;
+		} catch (IOException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -302,5 +358,26 @@ public class Listner extends Thread {
         return decryptedText;
     }
 
+
+	public int getListnerPort() {
+		return listnerPort;
+	}
+
+
+	public boolean isEnd() {
+		return end;
+	}
+
+
+	public void setListnerPort(int listnerPort) {
+		this.listnerPort = listnerPort;
+	}
+
+
+	public void setEnd(boolean end) {
+		this.end = end;
+	}
+
+		
 
 }

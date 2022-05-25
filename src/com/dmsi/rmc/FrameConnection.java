@@ -192,14 +192,14 @@ public class FrameConnection {
 		label1.setText("Screen Name");
 		label1.setFont(new Font(Font.SERIF,Font.LAYOUT_LEFT_TO_RIGHT,12));
 		label1.setForeground(Color.BLACK);
-		label1.setBounds(5, 10, 85,20);
+		label1.setBounds(10, 10, 85,20);
 		frame.add(label1);
 		
 		label2 = new JLabel();
 		label2.setText(machineState.getLastName());
 		label2.setFont(new Font(Font.SERIF,Font.BOLD,12));
 		label2.setForeground(Color.BLACK);
-		label2.setBounds(100, 10, 190,20);
+		label2.setBounds(120, 10, 175,20);
 		frame.add(label2);
 		//------------------------------------
 
@@ -495,7 +495,7 @@ public class FrameConnection {
         aboutFrame.getContentPane().setBackground(Color.WHITE);   
         
        
-      
+        frame.setVisible(true);
 		//-----------------------------------------------------------
         
         
