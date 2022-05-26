@@ -1,5 +1,7 @@
 package com.dmsi.rmc;
 
+import java.text.DecimalFormat;
+
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
@@ -8,6 +10,7 @@ import org.json.JSONObject;
 
 public class Memory {
 
+	private static final DecimalFormat df = new DecimalFormat("0.0");
 	private long memTotal;
 	private long memFree;
 	private long memUsed;
@@ -36,7 +39,7 @@ public class Memory {
 				this.memFree = mem.getFree();
 				this.memUsed = mem.getUsed();
 				this.memRam = mem.getRam();
-				this.memUsedPct = mem.getUsedPercent();
+				this.memUsedPct = Math.round(mem.getUsedPercent() * 10.0) / 10.0;
 			} catch (SigarException e) {
 				LoggerClass.getLOGGER().warning("Can't Get Memory Informations: Permission Denied");
 			}
@@ -54,7 +57,8 @@ public class Memory {
 				}
 				else
 				{
-					this.swapUsedPct = new Double(this.swapUsed) / new Double(this.swapTotal) ;
+					double sup = new Double(this.swapUsed) * 100 / new Double(this.swapTotal);
+					this.swapUsedPct = Math.round(sup * 10.0) / 10.0;
 				}
 			} catch (SigarException e) {
 				LoggerClass.getLOGGER().warning("Can't Get Swap Informations: Permission Denied");
