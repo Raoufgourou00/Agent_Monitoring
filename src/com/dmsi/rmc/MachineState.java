@@ -86,12 +86,7 @@ public class MachineState {
      
      //----------------------LastIpAddress--------------------------------
      public String getLastIpAddress() {
-    	 for(int i = 0;i<machineInfo.getNetworkInterfaceList().size();i++) {
-    		 if(machineInfo.getNetworkInterfaceList().get(i).getPrimaryIpAddress() != null) {
-    			 return machineInfo.getNetworkInterfaceList().get(i).getPrimaryIpAddress();	 
-    		 }
-    	 }
-    	 return null;
+    	 return getMachineInfo().getFqdn();
      }
      //--------------------------------------------------------------------------
      
@@ -101,7 +96,7 @@ public class MachineState {
      //---------------------LastMacAddress----------------------------------------
      public String getLastMacAddress() {
     	 for(int i = 0;i<machineInfo.getNetworkInterfaceList().size();i++) {
-    		 if(machineInfo.getNetworkInterfaceList().get(i).getPrimaryMacAddress() != null) {
+    		 if(machineInfo.getNetworkInterfaceList().get(i).getPrimaryIpAddress().equals(getLastIpAddress())) {
     			 return machineInfo.getNetworkInterfaceList().get(i).getPrimaryMacAddress();	 
     		 }
     	 }
@@ -109,26 +104,7 @@ public class MachineState {
      }
      //---------------------------------------------------------------------------------
      
-     //-----------------------------------------------------------------------------------
-     public String getLastNetwork() {
-    	 for(int i = 0;i<machineInfo.getNetworkInterfaceList().size();i++) {
-    		 if(machineInfo.getNetworkInterfaceList().get(i).getPrimaryInterface() != null) {
-    			 return machineInfo.getNetworkInterfaceList().get(i).getPrimaryInterface();	 
-    		 }
-    	 }
-    	 return null;
-     }
-     
-     public String getLastNetmask() {
-    	 for(int i = 0;i<machineInfo.getNetworkInterfaceList().size();i++) {
-    		 if(machineInfo.getNetworkInterfaceList().get(i).getPrimaryNetMask() != null) {
-    			 return machineInfo.getNetworkInterfaceList().get(i).getPrimaryNetMask();	 
-    		 }
-    	 }
-    	 return null;
-     }
-     //-------------------------------------------------------------------------------------
-     
+       
      
      //--------------Date of the day--------------------
      public String getToday() {

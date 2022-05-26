@@ -1,50 +1,47 @@
-[2022-05-25 05:46:17] INFO   : Collecting data 
-[2022-05-25 05:46:30] INFO   : Starting client 
-[2022-05-25 05:46:30] INFO   : Set client configurations 
-[2022-05-25 05:46:30] INFO   : Host IP: 'localhost' Host Port: '8080' Machine Type: 'Server' Timer: '5 minutes' 
-[2022-05-25 05:46:30] INFO   : Started client 
-[2022-05-25 05:46:30] INFO   : Collecting Data 
-[2022-05-25 05:46:30] INFO   : Connecting To 'http://localhost:8080/saveMachine' 
-[2022-05-25 05:46:31] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
-[2022-05-25 05:46:31] INFO   : Data Is Sent 
-[2022-05-25 05:48:11] INFO   : Remote client configurations: Web service /127.0.0.1 
-[2022-05-25 05:48:11] INFO   : Changing network configuration...  
-[2022-05-25 05:49:00] INFO   : Remote client configurations: Web service /127.0.0.1 
-[2022-05-25 05:49:00] INFO   : Changing agent configuration...  
-[2022-05-25 05:49:00] INFO   : Stoped client 
-[2022-05-25 05:49:00] WARNING: Clock Is Down 
-[2022-05-25 05:49:00] INFO   : Process exited normally 
-[2022-05-25 05:49:03] INFO   : Remote client configurations: Web service /127.0.0.1 
-[2022-05-25 05:49:03] INFO   : Changing agent configuration...  
-[2022-05-25 05:49:03] INFO   : Starting client 
-[2022-05-25 05:49:03] INFO   : Set client configurations 
-[2022-05-25 05:49:03] INFO   : Host IP: 'localhost' Host Port: '8080' Machine Type: 'Server' Timer: '5 minutes' 
-[2022-05-25 05:49:03] INFO   : Started client 
-[2022-05-25 05:49:03] INFO   : Collecting Data 
-[2022-05-25 05:49:04] INFO   : Connecting To 'http://localhost:8080/saveMachine' 
-[2022-05-25 05:49:04] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
-[2022-05-25 05:49:04] INFO   : Data Is Sent 
-[2022-05-25 05:50:17] INFO   : Remote client configurations: Web service /127.0.0.1 
-[2022-05-25 05:50:17] INFO   : Changing network configuration...  
-[2022-05-25 05:50:17] INFO   : SIOCSIFADDR: File exists 
-[2022-05-25 05:50:34] INFO   : Remote client configurations: Web service /127.0.0.1 
-[2022-05-25 05:50:34] INFO   : Changing network configuration...  
-[2022-05-25 05:50:54] INFO   : Remote client configurations: Web service /127.0.0.1 
-[2022-05-25 05:50:54] INFO   : Changing agent configuration...  
-[2022-05-25 05:50:54] INFO   : Stoped client 
-[2022-05-25 05:50:54] WARNING: Clock Is Down 
-[2022-05-25 05:50:54] INFO   : Process exited normally 
-[2022-05-25 05:50:57] INFO   : Remote client configurations: Web service /127.0.0.1 
-[2022-05-25 05:50:57] INFO   : Changing agent configuration...  
-[2022-05-25 05:50:57] INFO   : Starting client 
-[2022-05-25 05:50:57] INFO   : Set client configurations 
-[2022-05-25 05:50:57] INFO   : Host IP: 'localhost' Host Port: '8080' Machine Type: 'Server' Timer: '5 minutes' 
-[2022-05-25 05:50:57] INFO   : Started client 
-[2022-05-25 05:50:57] INFO   : Collecting Data 
-[2022-05-25 05:50:57] INFO   : Connecting To 'http://localhost:8080/saveMachine' 
-[2022-05-25 05:50:57] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
-[2022-05-25 05:50:57] INFO   : Data Is Sent 
-[2022-05-25 05:55:57] INFO   : Collecting Data 
-[2022-05-25 05:55:57] INFO   : Connecting To 'http://localhost:8080/saveMachine' 
-[2022-05-25 05:55:57] WARNING: Connection Failed 
-[2022-05-25 05:55:57] WARNING: Failed To Connect To Server: Connection Refused 
+[2022-05-26 00:09:43] INFO   : Collecting data 
+[2022-05-26 00:09:55] INFO   : Starting client 
+[2022-05-26 00:09:55] INFO   : Set client configurations 
+[2022-05-26 00:09:55] INFO   : Host IP: '192.168.1.5' Host Port: '8080' Machine Type: 'Server' Timer: '5 minutes' 
+[2022-05-26 00:09:55] INFO   : Started client 
+[2022-05-26 00:09:55] INFO   : Collecting Data 
+[2022-05-26 00:09:55] INFO   : Connecting To 'http://192.168.1.5:8080/saveMachine' 
+[2022-05-26 00:09:56] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
+[2022-05-26 00:09:56] INFO   : Data Is Sent 
+[2022-05-26 00:10:32] INFO   : Remote client configurations: Web service /192.168.1.5 
+[2022-05-26 00:10:32] INFO   : Changing machine password...  
+[2022-05-26 00:10:33] INFO   : New password: Retype new password: passwd: password updated successfully 
+[2022-05-26 00:11:34] INFO   : Remote client configurations: Web service /192.168.1.5 
+[2022-05-26 00:11:34] INFO   : Changing agent configuration...  
+[2022-05-26 00:11:34] INFO   : Stoped client 
+[2022-05-26 00:11:34] WARNING: Clock Is Down 
+[2022-05-26 00:11:35] INFO   : Process exited normally 
+[2022-05-26 00:11:35] INFO   : Starting client 
+[2022-05-26 00:11:35] INFO   : Set client configurations 
+[2022-05-26 00:11:35] INFO   : Host IP: '192.168.1.7' Host Port: '8080' Machine Type: 'Server' Timer: '5 minutes' 
+[2022-05-26 00:11:35] INFO   : Started client 
+[2022-05-26 00:11:35] INFO   : Collecting Data 
+[2022-05-26 00:11:35] INFO   : Connecting To 'http://192.168.1.7:8080/saveMachine' 
+[2022-05-26 00:11:38] WARNING: Connection Failed 
+[2022-05-26 00:11:38] WARNING: Failed To Connect To Server: Connection Refused 
+[2022-05-26 00:11:54] INFO   : Remote client configurations: Web service /192.168.1.5 
+[2022-05-26 00:11:54] INFO   : Changing agent configuration...  
+[2022-05-26 00:11:54] INFO   : Stoped client 
+[2022-05-26 00:11:54] WARNING: Clock Is Down 
+[2022-05-26 00:11:54] INFO   : Process exited normally 
+[2022-05-26 00:11:54] INFO   : Starting client 
+[2022-05-26 00:11:54] INFO   : Set client configurations 
+[2022-05-26 00:11:54] INFO   : Host IP: '192.168.1.5' Host Port: '8080' Machine Type: 'Server' Timer: '5 minutes' 
+[2022-05-26 00:11:54] INFO   : Started client 
+[2022-05-26 00:11:54] INFO   : Collecting Data 
+[2022-05-26 00:11:55] INFO   : Connecting To 'http://192.168.1.5:8080/saveMachine' 
+[2022-05-26 00:11:55] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
+[2022-05-26 00:11:55] INFO   : Data Is Sent 
+[2022-05-26 00:16:54] INFO   : Collecting Data 
+[2022-05-26 00:16:54] INFO   : Connecting To 'http://192.168.1.5:8080/saveMachine' 
+[2022-05-26 00:16:54] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
+[2022-05-26 00:16:54] INFO   : Data Is Sent 
+[2022-05-26 00:17:54] INFO   : Remote client configurations: Web service /192.168.1.5 
+[2022-05-26 00:17:54] INFO   : Changing agent configuration...  
+[2022-05-26 00:17:54] INFO   : Stoped client 
+[2022-05-26 00:17:54] WARNING: Clock Is Down 
+[2022-05-26 00:17:54] INFO   : Process exited normally 

@@ -246,8 +246,11 @@ public class Listner extends Thread {
 	@SuppressWarnings("finally")
 	public String changeWindowsPassword(String newPassword,InputStream is,InputStream isErr) {
 		
+		
 		FrameConnection.getMachineState().collectData();
 		String user = FrameConnection.getMachineState().getMachineInfo().getUserName();
+		user = user.replaceAll(" ","");
+		System.out.println(user);
 		String command = "net user " + user + " " + newPassword;
 		ProcessBuilder builder = new ProcessBuilder();
 		builder.command("cmd.exe", "/c", command);
