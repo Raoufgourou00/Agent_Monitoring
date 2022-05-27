@@ -54,7 +54,7 @@ public class FrameConnection {
 	private JMenuItem aboutDanky;
 	private JLabel label1;
 	private JLabel label2;
-	private String[] choices = {"Virtual Machine","Server"};
+	private String[] choices = {"VM","Server"};
 	private JLabel label3;
 	private static JComboBox<Object> label4;
 	private JLabel label5;
