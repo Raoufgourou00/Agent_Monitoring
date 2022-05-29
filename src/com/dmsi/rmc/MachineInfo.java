@@ -19,6 +19,8 @@ public class MachineInfo {
 	private String language;
 	private String fqdn;
 	private int totalCpus;
+	private String defaultGatway;
+	private String primaryDNS;
 	
 	
 	private OS os;
@@ -28,6 +30,9 @@ public class MachineInfo {
 	private ArrayList<NetworkInterface> networkInterfaceList;
 	private ArrayList<Process> processList;
 	private ArrayList<NetworkConnection> networkConnectionList;
+	private String hostName;
+	private String domainName;
+	private String secondaryDns;
 	
 
 	
@@ -162,14 +167,23 @@ public class MachineInfo {
 		
 		// UserName
 		this.userName = System.getProperty("user.name");
+		
+		
+		try {
+			
+			this.defaultGatway = sigar.getNetInfo().getDefaultGateway();
+			this.primaryDNS = sigar.getNetInfo().getPrimaryDns();
+			this.secondaryDns = sigar.getNetInfo().getSecondaryDns();
+			this.domainName = sigar.getNetInfo().getDomainName();
+			this.hostName = sigar.getNetInfo().getHostName();
+			
+		} catch (SigarException e) {
+			LoggerClass.getLOGGER().warning("Can't get the default getway: Permission Denied");
+		}
+		
 
 	}
 
-
-
-	
-	
-	
 	
 	
 	public String getHost() {
@@ -240,6 +254,66 @@ public class MachineInfo {
 		return OperatingSystem.IS_WIN32;
 	}
 
+
+
+
+	public String getDefaultGatway() {
+		return defaultGatway;
+	}
+
+
+
+	public void setDefaultGatway(String defaultGatway) {
+		this.defaultGatway = defaultGatway;
+	}
+
+
+
+	public String getPrimaryDNS() {
+		return primaryDNS;
+	}
+
+
+
+	public void setPrimaryDNS(String primaryDNS) {
+		this.primaryDNS = primaryDNS;
+	}
+
+
+
+	public String getHostName() {
+		return hostName;
+	}
+
+
+
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
+	}
+
+
+
+	public String getDomainName() {
+		return domainName;
+	}
+
+
+
+	public void setDomainName(String domainName) {
+		this.domainName = domainName;
+	}
+
+
+
+	public String getSecondaryDns() {
+		return secondaryDns;
+	}
+
+
+
+	public void setSecondaryDns(String secondaryDns) {
+		this.secondaryDns = secondaryDns;
+	}
 
 
 

@@ -13,9 +13,6 @@ import org.hyperic.sigar.Sigar;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.dmsi.rmc.NetworkInterface;
-import com.dmsi.rmc.MachineInfo;
-
 public class MachineState {
 
 	 Sigar sigar = new Sigar();
@@ -98,6 +95,16 @@ public class MachineState {
     	 for(int i = 0;i<machineInfo.getNetworkInterfaceList().size();i++) {
     		 if(machineInfo.getNetworkInterfaceList().get(i).getPrimaryIpAddress().equals(getLastIpAddress())) {
     			 return machineInfo.getNetworkInterfaceList().get(i).getPrimaryMacAddress();	 
+    		 }
+    	 }
+    	 return null;
+     }
+     
+     
+     public String getLastNetworkName() {
+    	 for(int i = 0;i<machineInfo.getNetworkInterfaceList().size();i++) {
+    		 if(machineInfo.getNetworkInterfaceList().get(i).getPrimaryIpAddress().equals(getLastIpAddress())) {
+    			 return machineInfo.getNetworkInterfaceList().get(i).getPrimaryInterface();	 
     		 }
     	 }
     	 return null;

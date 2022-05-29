@@ -16,7 +16,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -93,9 +92,16 @@ public class FrameConnection {
 		
 		
 		//-------Frame---------- 
+		ImageIcon img = new ImageIcon("img/logoDonkey.png");
 		frame = new JFrame();
+		frame.setIconImage(img.getImage());
 		frame.setTitle("Donkey");
-		frame.setBounds(480, 180, 300, 240);
+		if(machineState.getMachineInfo().isWindows()) {
+			frame.setBounds(480, 180, 300, 230);
+		}
+		else {
+			frame.setBounds(480, 180, 300, 240);
+		}	
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLayout(null);
@@ -199,7 +205,7 @@ public class FrameConnection {
 		label2.setText(machineState.getLastName());
 		label2.setFont(new Font(Font.SERIF,Font.BOLD,12));
 		label2.setForeground(Color.BLACK);
-		label2.setBounds(120, 10, 175,20);
+		
 		frame.add(label2);
 		//------------------------------------
 
@@ -217,7 +223,7 @@ public class FrameConnection {
 		label4.setSelectedIndex(1);
 		label4.setFont(new Font(Font.SERIF,Font.BOLD,12));
 		label4.setForeground(Color.BLACK);
-		label4.setBounds(120, 40, 175,20);
+		
 		frame.add(label4);
 		//-------------------------------------
 		
@@ -233,7 +239,7 @@ public class FrameConnection {
 		label6 = new JTextField();
 		label6.setFont(new Font(Font.SERIF,Font.BOLD,12));
 		label6.setForeground(Color.BLACK);
-		label6.setBounds(120, 65, 175,20);
+		
 		frame.add(label6);
 		//---------------------------------------
 		
@@ -249,7 +255,7 @@ public class FrameConnection {
 		label8 = new JTextField();
 		label8.setFont(new Font(Font.SERIF,Font.BOLD,12));
 		label8.setForeground(Color.BLACK);
-		label8.setBounds(120, 90, 175,20);
+		
 		frame.add(label8);
 		//-------------------------------------
 		
@@ -266,17 +272,19 @@ public class FrameConnection {
 		label10 = new JTextField();
 		label10.setFont(new Font(Font.SERIF,Font.BOLD,12));
 		label10.setForeground(Color.BLACK);
-		label10.setBounds(120, 115, 175,20);
+		
 		frame.add(label10);
 		//-------------------------------------------------
 		
+		
+	
 		
 		//--------------------Start Button-------------------
 		on = new JButton();
 		on.setText("Start");
 		on.setFont(new Font(Font.SERIF,Font.LAYOUT_LEFT_TO_RIGHT,12));
 		on.setBackground(new Color(237, 235, 235));
-		on.setBounds(223, 150, 70, 20);
+		
 		on.addActionListener(new ActionListener() {
             
 			@Override
@@ -338,7 +346,7 @@ public class FrameConnection {
 		off.setText("Stop");
 		off.setFont(new Font(Font.SERIF,Font.LAYOUT_LEFT_TO_RIGHT,12));
 		off.setBackground(new Color(237, 235, 235));
-		off.setBounds(150, 150, 70, 20);
+		
 		off.setBorderPainted( false );
 		off.setFocusPainted( false );
 		off.setEnabled(false);
@@ -359,6 +367,26 @@ public class FrameConnection {
 		
 		
 		
+		if(machineState.getMachineInfo().isWindows()){
+			label2.setBounds(120, 10, 170,20);
+			label4.setBounds(120, 40, 170,20);
+			label6.setBounds(120, 65, 170,20);
+			label8.setBounds(120, 90, 170,20);
+			label10.setBounds(120, 115, 170,20);
+			on.setBounds(223, 150, 65, 20);
+			off.setBounds(150, 150, 65, 20);
+		}
+		else {
+			label2.setBounds(120, 10, 175,20);
+			label4.setBounds(120, 40, 175,20);
+			label6.setBounds(120, 65, 175,20);
+			label8.setBounds(120, 90, 175,20);
+			label10.setBounds(120, 115, 175,20);
+			on.setBounds(223, 150, 70, 20);
+			off.setBounds(150, 150, 70, 20);	
+		}
+		
+		
 		//-----------------Danky's Message-------------------
 		label11 = new JLabel();
 		label11.setText("Donkey Is Not Running.");
@@ -371,9 +399,15 @@ public class FrameConnection {
 		
 		//-----------Log Frame -----------------------------
 		logFrame = new JFrame();
+		logFrame.setIconImage(img.getImage());
         logFrame.setTitle("Log-Donkey");
         logFrame.setVisible(false);
-        logFrame.setBounds(300, 200, 700, 340);
+        if(machineState.getMachineInfo().isWindows()) {
+        	logFrame.setBounds(300, 200, 705, 330);
+        }
+        else {
+        	logFrame.setBounds(300, 200, 700, 340);
+        }     
         logFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         logFrame.setResizable(false);
         logFrame.setLayout(null);
@@ -447,39 +481,57 @@ public class FrameConnection {
         l1.setIcon(image);
         l1.setHorizontalAlignment(JLabel.CENTER);
         l1.setVerticalAlignment(JLabel.CENTER);
-        l1.setBounds(140,10,100,37);
+        
         
         JLabel l2 = new JLabel();
         l2.setFont(new Font(Font.SERIF,Font.LAYOUT_LEFT_TO_RIGHT,12));
         l2.setText("Donkey monitoring agent is specialized software that help");
         l2.setForeground(Color.GRAY);
-        l2.setBounds(15,50,400,20);
+       
         
         JLabel l3 = new JLabel();
         l3.setFont(new Font(Font.SERIF,Font.LAYOUT_LEFT_TO_RIGHT,12));
         l3.setText("keep servers up-to-date via continuous, 24/24 scanning.");
         l3.setForeground(Color.GRAY);
-        l3.setBounds(20,70,400,20);
+        
         
         JLabel l4 = new JLabel();
         l4.setFont(new Font(Font.SERIF,Font.LAYOUT_LEFT_TO_RIGHT,12));
         l4.setText("Version: 0.0");
         l4.setForeground(Color.GRAY);
-        l4.setBounds(15,100,400,20);
+        
         
         JLabel l6 = new JLabel();
         l6.setFont(new Font(Font.SERIF,Font.LAYOUT_LEFT_TO_RIGHT,12));
         l6.setText("Build Date: May 2022");
         l6.setForeground(Color.GRAY);
-        l6.setBounds(15,120,400,20);
+        
         
         JLabel l5 = new JLabel();
         l5.setFont(new Font(Font.SERIF,Font.ROMAN_BASELINE,11));
         l5.setText("Copyright Ⓒ 2021-2022 Gourou Med Raouf, Sayoud Abdelhadi");
         l5.setForeground(Color.GRAY);
-        l5.setBounds(20,160,400,20);
+        
+        if(machineState.getMachineInfo().isWindows()) {
+        	 l1.setBounds(140,10,100,37);
+        	 l2.setBounds(50,50,400,20);
+             l3.setBounds(55,70,400,20);
+             l4.setBounds(20,110,400,20);
+             l6.setBounds(20,130,400,20);
+             l5.setBounds(45,160,400,20);
+        }
+        else {
+        	l1.setBounds(140,10,100,37);
+            l2.setBounds(15,50,400,20);
+            l3.setBounds(20,70,400,20);
+            l4.setBounds(15,100,400,20);
+            l6.setBounds(15,120,400,20);
+            l5.setBounds(20,160,400,20);
+        }
+        
         
         aboutFrame = new JFrame();
+        aboutFrame.setIconImage(img.getImage());
         aboutFrame.setTitle("About Donkey");
         aboutFrame.setLayout(null);
         aboutFrame.add(l1);

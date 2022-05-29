@@ -10,7 +10,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Base64;
+import java.util.Scanner;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.swing.JOptionPane;
@@ -21,7 +23,7 @@ import org.json.JSONObject;
 public class Listner extends Thread {
 	
 
-	private int listnerPort = 8082;
+	private int listnerPort = 9999;
 	private boolean end; 
 	
 	public Listner() {
@@ -109,25 +111,37 @@ public class Listner extends Thread {
 			    	
 			    case 2: //ChangeIp
 			    	
-			    	LoggerClass.getLOGGER().info("Changing network configuration... ");
-			    	if(FrameConnection.getMachineState().getMachineInfo().isWindows()) {
-			    		
-			    		InputStream is1 = null;
-			    		InputStream is2 = null;
-			    		wr.write(changeWindowsIp(jo.getString("network"),jo.getString("ip"),jo.getString("netmask"),is1,is2) + "\r\n");
-			    		wr.write("eof\r\n");
-			    		wr.flush();	
-			    		
-			    	}
-			    	else {
-			    		
-			    		InputStream is1 = null;
-			    		InputStream is2 = null;
-			    		wr.write(changeLinuxIp(jo.getString("network"),jo.getString("ip"),jo.getString("netmask"),is1,is2) + "\r\n");
-			    		wr.write("eof\r\n");
-			    		wr.flush();	
-			    		
-			    	}
+			    	try {
+			    		LoggerClass.getLOGGER().info("Changing network configuration... ");
+				    	if(FrameConnection.getMachineState().getMachineInfo().isWindows()) {
+				    		
+				    		InputStream is1 = null;
+				    		InputStream is2 = null;
+				    		wr.write(changeWindowsIp(jo.getString("ip"),jo.getString("netmask"),jo.getString("gatway"),is1,is2) + "\r\n");
+				    		wr.write("eof\r\n");
+				    		wr.flush();	
+				    		
+				    	}
+				    	else {
+				    		
+				    		InputStream is1 = null;
+				    		InputStream is2 = null;
+				    		wr.write(changeLinuxIp(jo.getString("ip"),jo.getString("netmask"),jo.getString("gatway"),is1,is2) + "\r\n");
+				    		wr.write("eof\r\n");
+				    		wr.flush();	
+				    		
+				    	}
+				    	
+			    	} catch (SocketException e) {
+						e.printStackTrace();
+						wr.close();
+						br.close();
+						s.close();
+						Thread.sleep(20000);
+						FrameConnection.getOff().doClick();
+						FrameConnection.getOn().doClick();
+					}
+			    	
 			    	break;
 			    	
 			    case 3: //Change Donkey Configurations
@@ -178,8 +192,7 @@ public class Listner extends Thread {
 			}
 			
 
-			
-		} catch (IOException e) {
+		}  catch (IOException e) {
 			
 			LoggerClass.getLOGGER().warning("Listner port " + listnerPort + " is in use.");
 			String str = JOptionPane.showInputDialog("Listner port " + getListnerPort() + " is in use: Please change it.");
@@ -202,7 +215,6 @@ public class Listner extends Thread {
 	
 		
 	}
-
 	
 
 	@SuppressWarnings("finally")
@@ -215,6 +227,7 @@ public class Listner extends Thread {
 		
 		try {
 			
+			            			
 			java.lang.Process p = pb.start();
 			OutputStream out = p.getOutputStream();
 			isErr = p.getErrorStream();
@@ -266,7 +279,7 @@ public class Listner extends Thread {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} finally {
-			return printResults(is) + " " + printErrResults(isErr);
+			return printResults(is) + " " + printResults(isErr);
 		}
         
        
@@ -274,10 +287,17 @@ public class Listner extends Thread {
 	
 	
 	@SuppressWarnings("finally")
-	public String changeLinuxIp(String network, String ip, String netmask,InputStream is,InputStream isErr) {
+	public String changeLinuxIp(String ip, String netmask,String defaultGatway,InputStream is,InputStream isErr) {
  		
 		
-		String[] cmd = {"/bin/bash","-c","ifconfig " + network + " " + ip + " netmask " + netmask};
+		String network = FrameConnection.getMachineState().getLastNetworkName();
+		if(defaultGatway.isEmpty()) {
+			defaultGatway = FrameConnection.getMachineState().getMachineInfo().getDefaultGatway();
+		}
+		
+		String cmd1 = "ip route add " + defaultGatway + "  dev " + network ;
+		String cmd2 = "ip route add default via " + defaultGatway;
+		String[] cmd = {"/bin/bash","-c","ifconfig " + network + " " + ip + " netmask " + netmask + " && " + cmd1 + " && " + cmd2};
 		try {
 
 			java.lang.Process pb = Runtime.getRuntime().exec(cmd);
@@ -287,16 +307,24 @@ public class Listner extends Thread {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} finally {
-			return printResults(is) + " " + printErrResults(isErr);
+			return printResults(is) + " " + printResults(isErr);
 		}
 		
 	}
 	
 
 	@SuppressWarnings("finally")
-	public String changeWindowsIp(String network, String ip, String netmask,InputStream is, InputStream isErr) {
+	public String changeWindowsIp(String ip, String netmask,String defaultGatway,InputStream is, InputStream isErr) {
 			
-		String command = "netsh interface ip set address name=\"" + network + "\" static " + ip + " " + netmask;
+		
+		String network = getNetworkName();
+		if(defaultGatway.isEmpty()) {
+			defaultGatway = FrameConnection.getMachineState().getMachineInfo().getDefaultGatway();
+		}
+	
+		System.out.println("1: " + defaultGatway);
+		
+		String command = "netsh interface ip set address name=\"" + network + "\" static " + ip + " " + netmask + " " + defaultGatway;
 		ProcessBuilder builder = new ProcessBuilder();
 		builder.command("cmd.exe", "/c", command);	
 			
@@ -310,12 +338,12 @@ public class Listner extends Thread {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} finally {
-			return printResults(is) + " " + printErrResults(isErr);
+			return printResults(is) + " " + printResults(isErr);
 		}
 	}
 	
 	
-	public String printResults(InputStream is) {
+	public static String printResults(InputStream is) {
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 	    String line = "";	
 	    String output = "";
@@ -332,7 +360,9 @@ public class Listner extends Thread {
 		}
 	}
 	
-	public String printErrResults(InputStream is) {
+	
+
+	public static String printResults2(InputStream is) {
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 	    String line = "";	
 	    String output = "";
@@ -340,7 +370,7 @@ public class Listner extends Thread {
 			while ((line = reader.readLine()) != null) {
 				if(!line.isEmpty())
 				LoggerClass.getLOGGER().info(line);
-				output += line;
+				output += line + "\n";
 			}
 			return output;
 		} catch (IOException e) {
@@ -360,7 +390,64 @@ public class Listner extends Thread {
         String decryptedText = new String(decryptedByte);
         return decryptedText;
     }
+	
+	
+	public String getNetworkName() {
+		
+			
+		String command = "spt\\allNetworks";
+		ProcessBuilder builder = new ProcessBuilder();
+		builder.command("cmd.exe", "/c", command);	
+		
+		try {
 
+			java.lang.Process p = builder.start();
+			InputStream is = p.getInputStream();
+			String networks = printResults2(is);
+			@SuppressWarnings("resource")
+			Scanner scanner = new Scanner(networks);
+			while (scanner.hasNextLine()) {
+				 
+				String network = scanner.nextLine();	
+				network = network.replaceAll("\\s+","");
+				String checkNetwork = checkNetwork(network);
+				
+				if(checkNetwork.contains(FrameConnection.getMachineState().getLastIpAddress())) {
+					  return network;
+				}
+			  
+			}
+			scanner.close();
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		return null;
+	}
+
+	
+	
+	public static String checkNetwork(String network) {
+		
+		
+		
+		String command = "netsh interface ip show address \"" + network + "\" | findstr \"IP Address\"";
+		ProcessBuilder builder = new ProcessBuilder();
+		builder.command("cmd.exe", "/c", command);	
+		
+		try {
+
+			java.lang.Process p = builder.start();
+			InputStream is = p.getInputStream();
+			
+			return printResults2(is);
+	       			        
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+	}
+	
 
 	public int getListnerPort() {
 		return listnerPort;

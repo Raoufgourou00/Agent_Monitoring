@@ -1,6 +1,5 @@
 package com.dmsi.rmc;
 
-import java.text.DecimalFormat;
 
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
@@ -10,7 +9,7 @@ import org.json.JSONObject;
 
 public class Memory {
 
-	private static final DecimalFormat df = new DecimalFormat("0.0");
+
 	private long memTotal;
 	private long memFree;
 	private long memUsed;

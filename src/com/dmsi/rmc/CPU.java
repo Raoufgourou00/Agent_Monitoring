@@ -1,14 +1,12 @@
 package com.dmsi.rmc;
 
-import java.text.DecimalFormat;
-
 import org.hyperic.sigar.CpuInfo;
 import org.hyperic.sigar.CpuPerc;
 import org.json.JSONObject;
 
 public class CPU {
 
-	private static final DecimalFormat df = new DecimalFormat("0.00");
+
 	private int cpuIndex; // ID
 	private String vendor;
 	private long cacheSize; // KB
@@ -44,15 +42,15 @@ public class CPU {
 		this.totalSockets = cpuInfo.getTotalSockets();
 		this.vendor = cpuInfo.getVendor();
 		
-		this.combined = Double.parseDouble(df.format(cpuPerc.getCombined() * 100D));
-		this.idleTime = Double.parseDouble(df.format(cpuPerc.getIdle() * 100D));
-		this.irqTime = Double.parseDouble(df.format(cpuPerc.getIrq() * 100D));
-		this.niceTime = Double.parseDouble(df.format(cpuPerc.getNice() * 100D));
-		this.softirqTime = Double.parseDouble(df.format(cpuPerc.getSoftIrq() * 100D));
-		this.stolenTime = Double.parseDouble(df.format(cpuPerc.getStolen() * 100D));
-		this.sysTime = Double.parseDouble(df.format(cpuPerc.getSys() * 100D));
-		this.userTime = Double.parseDouble(df.format(cpuPerc.getUser() * 100D));
-		this.waitTime = Double.parseDouble(df.format(cpuPerc.getWait() * 100D));
+		this.combined = (Math.round(cpuPerc.getCombined() * 100.0) / 100.0) * 100D;
+		this.idleTime = (Math.round(cpuPerc.getIdle() * 100.0) / 100.0) * 100D;
+		this.irqTime =  (Math.round(cpuPerc.getIrq() * 100.0) / 100.0) * 100D;
+		this.niceTime = (Math.round(cpuPerc.getNice() * 100.0) / 100.0) * 100D;
+		this.softirqTime = (Math.round(cpuPerc.getSoftIrq() * 100.0) / 100.0) * 100D;
+		this.stolenTime = (Math.round(cpuPerc.getStolen() * 100.0) / 100.0) * 100D;
+		this.sysTime = (Math.round(cpuPerc.getSys() * 100.0) / 100.0) * 100D;
+		this.userTime = (Math.round(cpuPerc.getUser() * 100.0) / 100.0) * 100D;
+		this.waitTime = (Math.round(cpuPerc.getWait() * 100.0) / 100.0) * 100D;
 		
 		
 	}
