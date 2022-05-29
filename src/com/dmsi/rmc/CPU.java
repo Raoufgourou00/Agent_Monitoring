@@ -42,15 +42,15 @@ public class CPU {
 		this.totalSockets = cpuInfo.getTotalSockets();
 		this.vendor = cpuInfo.getVendor();
 		
-		this.combined = (Math.round(cpuPerc.getCombined() * 100.0) / 100.0) * 100D;
-		this.idleTime = (Math.round(cpuPerc.getIdle() * 100.0) / 100.0) * 100D;
-		this.irqTime =  (Math.round(cpuPerc.getIrq() * 100.0) / 100.0) * 100D;
-		this.niceTime = (Math.round(cpuPerc.getNice() * 100.0) / 100.0) * 100D;
-		this.softirqTime = (Math.round(cpuPerc.getSoftIrq() * 100.0) / 100.0) * 100D;
-		this.stolenTime = (Math.round(cpuPerc.getStolen() * 100.0) / 100.0) * 100D;
-		this.sysTime = (Math.round(cpuPerc.getSys() * 100.0) / 100.0) * 100D;
-		this.userTime = (Math.round(cpuPerc.getUser() * 100.0) / 100.0) * 100D;
-		this.waitTime = (Math.round(cpuPerc.getWait() * 100.0) / 100.0) * 100D;
+		this.combined = ((Math.round(cpuPerc.getCombined()* 100.0) * 100.0) / 100.0);
+		this.idleTime = ((Math.round(cpuPerc.getIdle() * 100.0) * 100.0) / 100.0);
+		this.irqTime =  ((Math.round(cpuPerc.getIrq() * 100.0) * 100.0) / 100.0);
+		this.niceTime = ((Math.round(cpuPerc.getNice() * 100.0) * 100.0) / 100.0);
+		this.softirqTime = ((Math.round(cpuPerc.getSoftIrq() * 100.0) * 100.0) / 100.0);
+		this.stolenTime = ((Math.round(cpuPerc.getStolen() * 100.0) * 100.0) / 100.0);
+		this.sysTime = ((Math.round(cpuPerc.getSys() * 100.0) * 100.0) / 100.0);
+		this.userTime = ((Math.round(cpuPerc.getUser() * 100.0) * 100.0) / 100.0);
+		this.waitTime = ((Math.round(cpuPerc.getWait() * 100.0) * 100.0) / 100.0);
 		
 		
 	}

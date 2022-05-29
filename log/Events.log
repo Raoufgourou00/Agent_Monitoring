@@ -1,1 +1,20 @@
-[2022-05-29 01:22:35] INFO   : Collecting data 
+[2022-05-29 01:44:30] INFO   : Collecting data 
+[2022-05-29 01:44:40] INFO   : Starting client 
+[2022-05-29 01:44:40] INFO   : Set client configurations 
+[2022-05-29 01:44:40] INFO   : Host IP: '192.168.1.10' Host Port: '8080' Machine Type: 'Server' Timer: '8 minutes' 
+[2022-05-29 01:44:40] INFO   : Started client 
+[2022-05-29 01:44:40] INFO   : Collecting Data 
+[2022-05-29 01:44:41] INFO   : Connecting To 'http://192.168.1.10:8080/saveMachine' 
+[2022-05-29 01:44:41] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
+[2022-05-29 01:44:41] INFO   : Data Is Sent 
+[2022-05-29 01:45:48] INFO   : Stoped client 
+[2022-05-29 01:45:48] WARNING: Clock Is Down 
+[2022-05-29 01:45:48] INFO   : Process exited normally 
+[2022-05-29 01:45:48] INFO   : Starting client 
+[2022-05-29 01:45:48] INFO   : Set client configurations 
+[2022-05-29 01:45:48] INFO   : Host IP: '192.168.1.10' Host Port: '8080' Machine Type: 'Server' Timer: '8 minutes' 
+[2022-05-29 01:45:48] INFO   : Started client 
+[2022-05-29 01:45:48] INFO   : Collecting Data 
+[2022-05-29 01:45:49] INFO   : Connecting To 'http://192.168.1.10:8080/saveMachine' 
+[2022-05-29 01:45:49] INFO   : Cconnection Successfully Established Server: Connection Succeeded 
+[2022-05-29 01:45:49] INFO   : Data Is Sent 
