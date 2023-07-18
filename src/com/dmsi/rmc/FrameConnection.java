@@ -546,7 +546,6 @@ public class FrameConnection {
         aboutFrame.setResizable(false);
         aboutFrame.getContentPane().setBackground(Color.WHITE);   
         
-       
         frame.setVisible(true);
 		//-----------------------------------------------------------
         

@@ -87,9 +87,7 @@ public class MachineState {
      }
      //--------------------------------------------------------------------------
      
-     
-     
-     
+      
      //---------------------LastMacAddress----------------------------------------
      public String getLastMacAddress() {
     	 for(int i = 0;i<machineInfo.getNetworkInterfaceList().size();i++) {

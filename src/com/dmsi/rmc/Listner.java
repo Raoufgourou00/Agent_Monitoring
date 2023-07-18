@@ -409,7 +409,8 @@ public class Listner extends Thread {
 			while (scanner.hasNextLine()) {
 				 
 				String network = scanner.nextLine();	
-				network = network.replaceAll("\\s+","");
+				//network = network.replaceAll("\\s+","");
+				network = removeSpaces(network);
 				String checkNetwork = checkNetwork(network);
 				
 				if(checkNetwork.contains(FrameConnection.getMachineState().getLastIpAddress())) {
@@ -468,6 +469,31 @@ public class Listner extends Thread {
 		this.end = end;
 	}
 
+	public String removeSpaces(String s) {
 		
+		System.out.println(s +  " size : " + s.length());
+		
+		int i = 0;
+		int j = s.length() - 1;
+		
+		while(s.charAt(i)==' ' && i < s.length()) {
+			i++;
+		}
+		
+		System.out.println(i);
+		
+		if(i < s.length()) {
+		
+			while(s.charAt(j)==' ' && j>i) {
+				j--;
+			}
+			
+		}
+		System.out.println(j);
+		
+		String s2 = s.substring(i,j+1);
+		System.out.println(s2 +  " size : " + s2.length());
+		return  s2;
+	}
 
 }
